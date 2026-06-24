@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>La Grande Bibliothèque</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #0F1117;
+      --gold: #D4AF37;
+      --text-main: #F5F5F7;
+      --text-muted: #A0A3B1;
+      --card-bg: #151823;
+      --card-border: #262A3A;
+      --accent-lit: #C084FC;
+      --accent-hist: #F97373;
+      --accent-jeux: #4ADE80;
+      --accent-voyage: #38BDF8;
+      --accent-personnages: #FACC15;
+      --accent-cinema: #FB7185;
+      --accent-crimes: #F97316;
+      --accent-disney: #A855F7;
+      --accent-musique: #22C55E;
+      --accent-films: #0EA5E9;
+      --accent-sport: #22D3EE;
+      --accent-arts: #F472B6;
+      --accent-beaute: #EC4899;
+      --accent-voitures: #F97316;
+      --accent-botanique: #4ADE80;
+      --accent-mode: #EAB308;
+      --transition-fast: 0.2s ease-out;
+      --transition-med: 0.35s ease;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1C1F2B 0, #05060A 55%, #020308 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER */
+
+    header {
+      padding: 18px 32px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      background: linear-gradient(120deg, rgba(15, 17, 23, 0.96), rgba(10, 12, 18, 0.98));
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+    }
+
+    .logo-books {
+      width: 42px;
+      height: 42px;
+      position: relative;
+    }
+
+    .logo-book {
+      position: absolute;
+      width: 26px;
+      height: 34px;
+      border-radius: 4px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+      transform-origin: bottom center;
+    }
+
+    .logo-book:nth-child(1) {
+      background: linear-gradient(135deg, var(--gold), #FDE68A);
+      left: 0;
+      bottom: 0;
+      transform: rotate(-10deg);
+    }
+
+    .logo-book:nth-child(2) {
+      background: linear-gradient(135deg, #38BDF8, #0EA5E9);
+      left: 10px;
+      bottom: 4px;
+      transform: rotate(6deg);
+    }
+
+    .logo-book:nth-child(3) {
+      background: linear-gradient(135deg, #A855F7, #EC4899);
+      left: 20px;
+      bottom: -2px;
+      transform: rotate(-4deg);
+    }
+
+    .logo-area:hover .logo-book:nth-child(1) {
+      transform: rotate(-14deg) translateY(-1px);
+    }
+
+    .logo-area:hover .logo-book:nth-child(2) {
+      transform: rotate(10deg) translateY(-1px);
+    }
+
+    .logo-area:hover .logo-book:nth-child(3) {
+      transform: rotate(-8deg) translateY(-1px);
+    }
+
+    .logo-text-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .logo-text-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-input {
+      background: rgba(15, 17, 23, 0.9);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 6px 12px 6px 32px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .header-tag {
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      color: var(--gold);
+      background: radial-gradient(circle at top, rgba(212, 175, 55, 0.18), transparent 60%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* LAYOUT */
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      flex: 1;
+      min-height: 0;
+    }
+
+    aside {
+      border-right: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top left, #151823 0, #05060A 55%);
+      padding: 18px 16px 20px;
+      overflow-y: auto;
+    }
+
+    main {
+      padding: 22px 26px 32px;
+      overflow-y: auto;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+      position: relative;
+    }
+
+    .category-item:hover {
+      background: rgba(15, 23, 42, 0.9);
+      transform: translateX(2px);
+      border-color: rgba(148, 163, 184, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+    }
+
+    .category-item.active {
+      background: linear-gradient(120deg, rgba(212, 175, 55, 0.16), rgba(15, 23, 42, 0.95));
+      border-color: rgba(212, 175, 55, 0.7);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .category-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+
+    .category-icon {
+      font-size: 1.1rem;
+    }
+
+    .category-labels {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .category-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .category-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(75, 85, 99, 0.8);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer span {
+      color: var(--gold);
+    }
+
+    /* MAIN – HOME */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 22px;
+      margin-bottom: 26px;
+    }
+
+    .hero-main {
+      background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.12), rgba(15, 17, 23, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 18px 18px 18px 20px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.18) 0, transparent 60%),
+        radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.18) 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(248, 250, 252, 0.8);
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.9);
+      background: linear-gradient(120deg, rgba(212, 175, 55, 0.95), #FDE68A);
+      color: #111827;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.95);
+      transform: translateY(-1px);
+      border-color: rgba(212, 175, 55, 0.6);
+    }
+
+    .hero-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hero-meta-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-card {
+      background: rgba(15, 17, 23, 0.96);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 10px 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      font-size: 0.8rem;
+    }
+
+    .hero-card-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .hero-card-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hero-card-main span {
+      font-size: 0.9rem;
+    }
+
+    .hero-card-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.7);
+      color: var(--gold);
+      font-size: 0.7rem;
+    }
+
+    /* GRID CATEGORIES */
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .category-card {
+      position: relative;
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.18), rgba(15, 17, 23, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 12px 11px 11px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transform-origin: left center;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.7;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(212, 175, 55, 0.18) 0, transparent 60%);
+    }
+
+    .category-card:hover {
+      transform: perspective(900px) rotateY(-9deg) translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      border-color: rgba(212, 175, 55, 0.7);
+    }
+
+    .category-card-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .category-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .category-card-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-card-icon {
+      font-size: 1.3rem;
+    }
+
+    .category-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+    }
+
+    .category-card-tag {
+      font-size: 0.7rem;
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+    }
+
+    .category-card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .category-card-progress {
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .category-card-progress-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.9), #FDE68A);
+      width: 30%;
+    }
+
+    /* CATEGORY VIEW */
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb span {
+      color: var(--gold);
+    }
+
+    .category-view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .category-view-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-view-title-icon {
+      font-size: 1.4rem;
+    }
+
+    .category-view-title-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+    }
+
+    .category-view-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subcategories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .subcategory-card {
+      background: rgba(15, 17, 23, 0.98);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 10px 10px 9px;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subcategory-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      border-color: rgba(212, 175, 55, 0.7);
+      background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.12), rgba(15, 17, 23, 0.98));
+    }
+
+    .subcategory-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .subcategory-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .subcategory-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .subcategory-quiz-pill {
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    /* FICHES + QUIZZ */
+
+    .content-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 16px;
+    }
+
+    .fiches-column, .quiz-column {
+      background: rgba(15, 17, 23, 0.98);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 12px 12px 11px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .column-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .column-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .fiches-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .fiche-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 8px 9px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+      gap: 8px;
+      font-size: 0.8rem;
+      transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .fiche-card:hover {
+      border-color: rgba(212, 175, 55, 0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.12), rgba(15, 23, 42, 0.98));
+    }
+
+    .fiche-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .fiche-title {
+      font-weight: 500;
+    }
+
+    .fiche-tags {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .fiche-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .btn-mini {
+      font-size: 0.7rem;
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-mini:hover {
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+      border-color: rgba(212, 175, 55, 0.7);
+    }
+
+    .quiz-box {
+      font-size: 0.8rem;
+    }
+
+    .quiz-question {
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .quiz-option {
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .quiz-option:hover {
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    .quiz-option.correct {
+      border-color: #22C55E;
+      background: rgba(22, 163, 74, 0.15);
+    }
+
+    .quiz-option.incorrect {
+      border-color: #EF4444;
+      background: rgba(220, 38, 38, 0.15);
+    }
+
+    .quiz-feedback {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .quiz-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-progress {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        display: none;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .content-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 12px 14px;
+      }
+      main {
+        padding: 16px 14px 22px;
+      }
+      .hero-title {
+        font-size: 1.6rem;
+      }
+      .category-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-area" id="homeLogo">
+      <div class="logo-books">
+        <div class="logo-book"></div>
+        <div class="logo-book"></div>
+        <div class="logo-book"></div>
+      </div>
+      <div>
+        <div class="logo-text-main">La Grande Bibliothèque</div>
+        <div class="logo-text-sub">Clique ici pour revenir à l’accueil</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input id="searchInput" class="search-input" type="text" placeholder="Rechercher une fiche, une catégorie..." />
+      </div>
+      <div class="header-tag">
+        ✨ <span>Culture générale</span> &nbsp;•&nbsp; Fiches, PDF, quizz
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="sidebar-section-title">Dossiers principaux</div>
+      <div id="sidebarCategories" class="category-list"></div>
+
+      <div class="sidebar-section-title">Raccourcis</div>
+      <div class="category-list">
+        <div class="category-item" id="shortcutAllQuizzes">
+          <div class="category-color-dot" style="background: linear-gradient(135deg,#22C55E,#0EA5E9); box-shadow:0 0 0 3px rgba(34,197,94,0.35);"></div>
+          <div class="category-icon">🧠</div>
+          <div class="category-labels">
+            <div class="category-name">Tous les quizz</div>
+            <div class="category-meta">Réviser en mode aléatoire</div>
+          </div>
+        </div>
+        <div class="category-item" id="shortcutRecent">
+          <div class="category-color-dot" style="background: linear-gradient(135deg,#F97316,#FACC15); box-shadow:0 0 0 3px rgba(249,115,22,0.35);"></div>
+          <div class="category-icon">⭐</div>
+          <div class="category-labels">
+            <div class="category-name">Dernières fiches</div>
+            <div class="category-meta">Ce que tu as ajouté récemment</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div><span>Astuce :</span> tu peux modifier toutes les fiches et quizz dans le fichier <code>script</code> ci‑dessous.</div>
+      </div>
+    </aside>
+
+    <main>
+      <!-- HOME VIEW -->
+      <section id="homeView">
+        <div class="hero">
+          <div class="hero-main">
+            <div class="hero-content">
+              <div class="hero-kicker">Bienvenue dans</div>
+              <div class="hero-title">
+                La Grande Bibliothèque<span> —</span><br />
+                <span>toute ta culture générale</span> dans un seul lieu.
+              </div>
+              <div class="hero-subtitle">
+                Littérature, histoire, jeux, voyages, cinéma, crimes, Disney, musique, sport, arts, beauté, voitures, botanique, mode...
+                Chaque dossier est une porte vers un univers, avec fiches, PDF, images et quizz.
+              </div>
+              <div class="hero-actions">
+                <button class="btn-primary" id="btnStartExploring">
+                  📂 Explorer les dossiers
+                </button>
+                <button class="btn-ghost" id="btnRandomQuiz">
+                  🎲 Lancer un quiz aléatoire
+                </button>
+              </div>
+              <div class="hero-meta">
+                <div class="hero-meta-pill">Fiches modifiables à volonté</div>
+                <div class="hero-meta-pill">PDF & images intégrables</div>
+                <div class="hero-meta-pill">Quizz dans chaque catégorie</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-side">
+            <div class="hero-card">
+              <div class="hero-card-title">Progression globale</div>
+              <div class="hero-card-main">
+                <span>Quizz complétés</span>
+                <div class="hero-card-badge" id="globalQuizStats">0 / 0</div>
+              </div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-card-title">Suggestion du moment</div>
+              <div class="hero-card-main">
+                <span id="suggestionText">Clique sur un dossier pour commencer.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title-row">
+          <div>
+            <div class="section-title">Dossiers‑catégories</div>
+            <div class="section-subtitle">Chaque dossier s’ouvre comme un livre, avec ses sous‑dossiers, fiches, PDF et quizz.</div>
+          </div>
+        </div>
+
+        <div id="categoryGrid" class="category-grid"></div>
+      </section>
+
+      <!-- CATEGORY VIEW -->
+      <section id="categoryView" style="display:none;">
+        <div class="breadcrumb">
+          <span>La Grande Bibliothèque</span> &nbsp;/&nbsp; <span id="breadcrumbCategory"></span>
+          <span id="breadcrumbSubcategoryWrapper" style="display:none;"> &nbsp;/&nbsp; <span id="breadcrumbSubcategory"></span></span>
+        </div>
+
+        <div class="category-view-header">
+          <div class="category-view-title">
+            <div class="category-view-title-icon" id="categoryViewIcon">📚</div>
+            <div>
+              <div class="category-view-title-text" id="categoryViewTitle">Titre catégorie</div>
+              <div class="section-subtitle" id="categoryViewSubtitle">Sous‑titre</div>
+            </div>
+          </div>
+          <div class="category-view-actions">
+            <div class="pill" id="categoryStats">0 fiches • 0 quizz</div>
+            <button class="btn-mini" id="btnBackToHome">⬅ Retour à l’accueil</button>
+          </div>
+        </div>
+
+        <div class="section-title-row">
+          <div class="section-title">Sous‑dossiers</div>
+          <div class="section-subtitle">Choisis un sous‑dossier pour voir ses fiches et quizz.</div>
+        </div>
+        <div id="subcategoriesGrid" class="subcategories-grid"></div>
+
+        <div class="section-title-row" style="margin-top:14px;">
+          <div class="section-title">Fiches & quizz</div>
+          <div class="section-subtitle">Fiches modifiables, PDF, images et quizz pour réviser.</div>
+        </div>
+
+        <div class="content-columns">
+          <div class="fiches-column">
+            <div class="column-title-row">
+              <div class="column-title">Fiches & ressources</div>
+              <button class="btn-mini" id="btnAddFiche">+ Ajouter une fiche (dans le code)</button>
+            </div>
+            <div id="fichesList" class="fiches-list"></div>
+          </div>
+          <div class="quiz-column">
+            <div class="column-title-row">
+              <div class="column-title">Quiz du sous‑dossier</div>
+              <button class="btn-mini" id="btnNextQuestion">Question suivante</button>
+            </div>
+            <div id="quizBox" class="quiz-box">
+              <div class="quiz-question">Choisis un sous‑dossier pour lancer un quiz.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // =========================
+    // DONNÉES DU SITE
+    // =========================
+    // Tu peux modifier / ajouter des catégories, sous‑catégories, fiches, PDF, images et quizz ici.
+    // Chaque catégorie a :
+    // - id, nom, icône, couleur
+    // - sousCategories : tableau
+    // Chaque sous‑catégorie a :
+    // - id, nom, description
+    // - fiches : tableau de fiches
+    // - quiz : tableau de questions
+
+    const libraryData = [
+      {
+        id: "litterature",
+        name: "Littérature",
+        icon: "📖",
+        color: "var(--accent-lit)",
+        description: "Auteurs, mouvements, œuvres, genres littéraires, analyses de textes.",
+        subCategories: [
+          {
+            id: "classiques-fr",
+            name: "Classiques français",
+            description: "Balzac, Flaubert, Zola, Hugo, etc.",
+            fiches: [
+              {
+                id: "madame-bovary",
+                title: "Madame Bovary — Flaubert",
+                tags: ["roman", "XIXe", "réalisme"],
+                pdfUrl: "pdf/madame-bovary-fiche.pdf", // à créer
+                imageUrl: "images/madame-bovary.jpg", // à créer
+                editableNote: "Résumé, personnages, enjeux, citations clés."
+              },
+              {
+                id: "les-miserables",
+                title: "Les Misérables — Victor Hugo",
+                tags: ["roman", "XIXe", "engagement"],
+                pdfUrl: "",
+                imageUrl: "",
+                editableNote: "Structure du roman, thèmes, personnages principaux."
+              }
+            ],
+            quiz: [
+              {
+                question: "Qui est l’auteur de « Madame Bovary » ?",
+                options: ["Émile Zola", "Gustave Flaubert", "Victor Hugo", "Honoré de Balzac"],
+                correctIndex: 1
+              },
+              {
+                question: "Dans « Les Misérables », quel est le nom de l’inspecteur qui poursuit Jean Valjean ?",
+                options: ["Javert", "Thenardier", "Marius", "Enjolras"],
+                correctIndex: 0
+              }
+            ]
+          },
+          {
+            id: "poesie",
+            name: "Poésie & mouvements",
+            description: "Symbolisme, romantisme, surréalisme...",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "histoire",
+        name: "Histoire",
+        icon: "🏛️",
+        color: "var(--accent-hist)",
+        description: "Périodes, événements, révolutions, grandes dates.",
+        subCategories: [
+          {
+            id: "revolution-francaise",
+            name: "Révolution française",
+            description: "1789, acteurs, causes et conséquences.",
+            fiches: [
+              {
+                id: "prise-bastille",
+                title: "La prise de la Bastille",
+                tags: ["1789", "Révolution française"],
+                pdfUrl: "pdf/prise-bastille.pdf",
+                imageUrl: "images/bastille.jpg",
+                editableNote: "Contexte, déroulement, symbolique."
+              }
+            ],
+            quiz: [
+              {
+                question: "En quelle année a lieu la prise de la Bastille ?",
+                options: ["1776", "1789", "1815", "1848"],
+                correctIndex: 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "jeux",
+        name: "Règles de jeux",
+        icon: "🎲",
+        color: "var(--accent-jeux)",
+        description: "Jeux de société, cartes, jeux de rôle, etc.",
+        subCategories: [
+          {
+            id: "jeux-societe",
+            name: "Jeux de société",
+            description: "Règles, variantes, astuces.",
+            fiches: [
+              {
+                id: "uno",
+                title: "Règles du UNO",
+                tags: ["cartes", "famille"],
+                pdfUrl: "pdf/uno-regles.pdf",
+                imageUrl: "images/uno.jpg",
+                editableNote: "Règles de base, variantes, pénalités."
+              }
+            ],
+            quiz: [
+              {
+                question: "Combien de cartes doit piocher un joueur sur un +4 au UNO ?",
+                options: ["2", "3", "4", "5"],
+                correctIndex: 2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "voyages",
+        name: "Voyages",
+        icon: "🌍",
+        color: "var(--accent-voyage)",
+        description: "Pays, villes, cultures, itinéraires.",
+        subCategories: [
+          {
+            id: "europe",
+            name: "Europe",
+            description: "Capitales, lieux incontournables.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "personnages",
+        name: "Personnages historiques",
+        icon: "👑",
+        color: "var(--accent-personnages)",
+        description: "Biographies, rôles, contextes.",
+        subCategories: [
+          {
+            id: "grands-leaders",
+            name: "Grands leaders",
+            description: "Rois, reines, chefs d’État.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "cinema",
+        name: "Histoire du cinéma",
+        icon: "🎬",
+        color: "var(--accent-cinema)",
+        description: "Courants, réalisateurs, films cultes.",
+        subCategories: [
+          {
+            id: "courants",
+            name: "Courants & mouvements",
+            description: "Nouvelle Vague, expressionnisme, etc.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "crimes",
+        name: "Histoires de crimes",
+        icon: "🕵️‍♀️",
+        color: "var(--accent-crimes)",
+        description: "Affaires célèbres, enquêtes, criminologie.",
+        subCategories: [
+          {
+            id: "affaires-celebres",
+            name: "Affaires célèbres",
+            description: "Grands procès, enquêtes marquantes.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "disney",
+        name: "Disney",
+        icon: "🏰",
+        color: "var(--accent-disney)",
+        description: "Films, personnages, univers.",
+        subCategories: [
+          {
+            id: "classiques-disney",
+            name: "Classiques animés",
+            description: "Les grands classiques Disney.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "musique",
+        name: "Musique",
+        icon: "🎵",
+        color: "var(--accent-musique)",
+        description: "Genres, artistes, histoire de la musique.",
+        subCategories: [
+          {
+            id: "rock-pop",
+            name: "Rock & Pop",
+            description: "Groupes, albums, dates clés.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "films",
+        name: "Films",
+        icon: "🎞️",
+        color: "var(--accent-films)",
+        description: "Genres, analyses, recommandations.",
+        subCategories: [
+          {
+            id: "films-cultes",
+            name: "Films cultes",
+            description: "Classiques à connaître.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "sport",
+        name: "Sport",
+        icon: "🏅",
+        color: "var(--accent-sport)",
+        description: "Règles, compétitions, athlètes.",
+        subCategories: [
+          {
+            id: "sports-collectifs",
+            name: "Sports collectifs",
+            description: "Football, basket, etc.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "arts",
+        name: "Arts",
+        icon: "🎨",
+        color: "var(--accent-arts)",
+        description: "Peinture, sculpture, architecture.",
+        subCategories: [
+          {
+            id: "mouvements-artistiques",
+            name: "Mouvements artistiques",
+            description: "Impressionnisme, cubisme, etc.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "beaute",
+        name: "Beauté",
+        icon: "💄",
+        color: "var(--accent-beaute)",
+        description: "Soins, maquillage, rituels.",
+        subCategories: [
+          {
+            id: "soins-peau",
+            name: "Soins de la peau",
+            description: "Routines, types de peau.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "voitures",
+        name: "Voitures",
+        icon: "🚗",
+        color: "var(--accent-voitures)",
+        description: "Marques, modèles, histoire de l’auto.",
+        subCategories: [
+          {
+            id: "sportives",
+            name: "Sportives",
+            description: "Modèles emblématiques.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "botanique",
+        name: "Botanique",
+        icon: "🌿",
+        color: "var(--accent-botanique)",
+        description: "Plantes, jardins, écosystèmes.",
+        subCategories: [
+          {
+            id: "plantes-interieur",
+            name: "Plantes d’intérieur",
+            description: "Entretien, lumière, arrosage.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      },
+      {
+        id: "mode",
+        name: "Mode",
+        icon: "👗",
+        color: "var(--accent-mode)",
+        description: "Styles, créateurs, histoire de la mode.",
+        subCategories: [
+          {
+            id: "haute-couture",
+            name: "Haute couture",
+            description: "Maisons, silhouettes, défilés.",
+            fiches: [],
+            quiz: []
+          }
+        ]
+      }
+    ];
+
+    // =========================
+    // ÉTAT GLOBAL
+    // =========================
+
+    let currentCategoryId = null;
+    let currentSubcategoryId = null;
+    let currentQuizIndex = 0;
+    let currentQuizQuestions = [];
+    let completedQuizzes = 0;
+    let totalQuizQuestions = 0;
+
+    // =========================
+    // UTILITAIRES
+    // =========================
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function getCategoryById(id) {
+      return libraryData.find(cat => cat.id === id);
+    }
+
+    function getSubcategory(category, subId) {
+      return category.subCategories.find(sc => sc.id === subId);
+    }
+
+    function computeGlobalQuizStats() {
+      let total = 0;
+      libraryData.forEach(cat => {
+        cat.subCategories.forEach(sc => {
+          total += sc.quiz.length;
+        });
+      });
+      totalQuizQuestions = total;
+      $("globalQuizStats").textContent = `${completedQuizzes} / ${totalQuizQuestions}`;
+    }
+
+    function randomSuggestion() {
+      const flat = [];
+      libraryData.forEach(cat => {
+        cat.subCategories.forEach(sc => {
+          sc.fiches.forEach(f => {
+            flat.push({ cat, sc, f });
+          });
+        });
+      });
+      if (flat.length === 0) {
+        $("suggestionText").textContent = "Ajoute tes premières fiches dans le code pour voir une suggestion ici.";
+        return;
+      }
+      const pick = flat[Math.floor(Math.random() * flat.length)];
+      $("suggestionText").textContent = `Pourquoi ne pas ouvrir « ${pick.f.title} » dans ${pick.cat.name} → ${pick.sc.name} ?`;
+    }
+
+    // =========================
+    // RENDU : ACCUEIL
+    // =========================
+
+    function renderCategoryGrid() {
+      const grid = $("categoryGrid");
+      grid.innerHTML = "";
+      libraryData.forEach(cat => {
+        const card = document.createElement("div");
+        card.className = "category-card";
+        card.style.setProperty("--card-accent", cat.color);
+        card.innerHTML = `
+          <div class="category-card-inner">
+            <div class="category-card-header">
+              <div class="category-card-left">
+                <div class="category-card-icon">${cat.icon}</div>
+                <div>
+                  <div class="category-card-title">${cat.name}</div>
+                  <div class="section-subtitle" style="font-size:0.75rem;">${cat.description}</div>
+                </div>
+              </div>
+              <div class="category-card-tag">${cat.subCategories.length} sous‑dossiers</div>
+            </div>
+            <div class="category-card-meta">
+              <div>${countFiches(cat)} fiches</div>
+              <div>${countQuiz(cat)} quizz</div>
+            </div>
+            <div class="category-card-progress">
+              <div class="category-card-progress-bar"></div>
+            </div>
+          </div>
+        `;
+        card.addEventListener("click", () => openCategory(cat.id));
+        grid.appendChild(card);
+      });
+    }
+
+    function countFiches(cat) {
+      let n = 0;
+      cat.subCategories.forEach(sc => n += sc.fiches.length);
+      return n;
+    }
+
+    function countQuiz(cat) {
+      let n = 0;
+      cat.subCategories.forEach(sc => n += sc.quiz.length);
+      return n;
+    }
+
+    // =========================
+    // RENDU : SIDEBAR
+    // =========================
+
+    function renderSidebar() {
+      const container = $("sidebarCategories");
+      container.innerHTML = "";
+      libraryData.forEach(cat => {
+        const item = document.createElement("div");
+        item.className = "category-item";
+        item.dataset.id = cat.id;
+        item.innerHTML = `
+          <div class="category-color-dot" style="background:${cat.color}; box-shadow:0 0 0 3px ${cat.color.replace('var', 'rgba').replace(')', ',0.35)')};"></div>
+          <div class="category-icon">${cat.icon}</div>
+          <div class="category-labels">
+            <div class="category-name">${cat.name}</div>
+            <div class="category-meta">${cat.subCategories.length} sous‑dossiers • ${countQuiz(cat)} quizz</div>
+          </div>
+        `;
+        item.addEventListener("click", () => openCategory(cat.id));
+        container.appendChild(item);
+      });
+    }
+
+    function setActiveSidebarCategory(id) {
+      const items = document.querySelectorAll(".category-item");
+      items.forEach(it => {
+        if (it.dataset.id === id) {
+          it.classList.add("active");
+        } else {
+          it.classList.remove("active");
+        }
+      });
+    }
+
+    // =========================
+    // VUES
+    // =========================
+
+    function showHome() {
+      currentCategoryId = null;
+      currentSubcategoryId = null;
+      $("homeView").style.display = "";
+      $("categoryView").style.display = "none";
+      setActiveSidebarCategory(null);
+      randomSuggestion();
+    }
+
+    function openCategory(categoryId) {
+      currentCategoryId = categoryId;
+      currentSubcategoryId = null;
+      const cat = getCategoryById(categoryId);
+      if (!cat) return;
+
+      $("homeView").style.display = "none";
+      $("categoryView").style.display = "";
+
+      $("breadcrumbCategory").textContent = cat.name;
+      $("breadcrumbSubcategoryWrapper").style.display = "none";
+
+      $("categoryViewIcon").textContent = cat.icon;
+      $("categoryViewTitle").textContent = cat.name;
+      $("categoryViewSubtitle").textContent = cat.description;
+      $("categoryStats").textContent = `${countFiches(cat)} fiches • ${countQuiz(cat)} quizz`;
+
+      setActiveSidebarCategory(categoryId);
+      renderSubcategories(cat);
+      renderFichesAndQuiz(null);
+    }
+
+    function renderSubcategories(cat) {
+      const grid = $("subcategoriesGrid");
+      grid.innerHTML = "";
+      cat.subCategories.forEach(sc => {
+        const card = document.createElement("div");
+        card.className = "subcategory-card";
+        card.innerHTML = `
+          <div class="subcategory-title">${sc.name}</div>
+          <div class="subcategory-meta">${sc.description}</div>
+          <div class="subcategory-footer">
+            <div>${sc.fiches.length} fiches</div>
+            <div class="subcategory-quiz-pill">${sc.quiz.length} quizz</div>
+          </div>
+        `;
+        card.addEventListener("click", () => openSubcategory(cat.id, sc.id));
+        grid.appendChild(card);
+      });
+    }
+
+    function openSubcategory(categoryId, subId) {
+      const cat = getCategoryById(categoryId);
+      if (!cat) return;
+      const sc = getSubcategory(cat, subId);
+      if (!sc) return;
+
+      currentCategoryId = categoryId;
+      currentSubcategoryId = subId;
+
+      $("breadcrumbCategory").textContent = cat.name;
+      $("breadcrumbSubcategoryWrapper").style.display = "";
+      $("breadcrumbSubcategory").textContent = sc.name;
+
+      renderFichesAndQuiz(sc);
+    }
+
+    function renderFichesAndQuiz(subcategory) {
+      const fichesList = $("fichesList");
+      fichesList.innerHTML = "";
+
+      if (!subcategory) {
+        fichesList.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Choisis un sous‑dossier pour voir ses fiches.</div>`;
+        $("quizBox").innerHTML = `<div class="quiz-question">Choisis un sous‑dossier pour lancer un quiz.</div>`;
+        return;
+      }
+
+      if (subcategory.fiches.length === 0) {
+        fichesList.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Aucune fiche pour l’instant. Ajoute‑en dans le code (tableau <code>fiches</code>).</div>`;
+      } else {
+        subcategory.fiches.forEach(f => {
+          const card = document.createElement("div");
+          card.className = "fiche-card";
+          card.innerHTML = `
+            <div class="fiche-main">
+              <div class="fiche-title">${f.title}</div>
+              <div class="fiche-tags">${f.tags.join(" • ")}</div>
+              <div style="font-size:0.7rem; color:var(--text-muted);">${f.editableNote || ""}</div>
+            </div>
+            <div class="fiche-actions">
+              <button class="btn-mini">📄 Ouvrir la fiche (texte)</button>
+              ${f.pdfUrl ? `<button class="btn-mini" onclick="window.open('${f.pdfUrl}','_blank')">📑 PDF</button>` : ""}
+              ${f.imageUrl ? `<button class="btn-mini" onclick="window.open('${f.imageUrl}','_blank')">🖼️ Image</button>` : ""}
+              <button class="btn-mini">✏️ Modifier (dans le code)</button>
+            </div>
+          `;
+          fichesList.appendChild(card);
+        });
+      }
+
+      // Préparer le quiz
+      currentQuizQuestions = subcategory.quiz;
+      currentQuizIndex = 0;
+      if (currentQuizQuestions.length === 0) {
+        $("quizBox").innerHTML = `<div class="quiz-question">Aucun quiz pour ce sous‑dossier. Ajoute des questions dans le tableau <code>quiz</code>.</div>`;
+      } else {
+        renderCurrentQuizQuestion();
+      }
+    }
+
+    function renderCurrentQuizQuestion() {
+      const box = $("quizBox");
+      if (currentQuizQuestions.length === 0) {
+        box.innerHTML = `<div class="quiz-question">Aucun quiz disponible.</div>`;
+        return;
+      }
+      const q = currentQuizQuestions[currentQuizIndex];
+      box.innerHTML = `
+        <div class="quiz-question">${q.question}</div>
+        <div class="quiz-options">
+          ${q.options.map((opt, idx) => `
+            <div class="quiz-option" data-index="${idx}">${opt}</div>
+          `).join("")}
+        </div>
+        <div class="quiz-feedback" id="quizFeedback">Choisis une réponse.</div>
+        <div class="quiz-controls">
+          <div class="quiz-progress">Question ${currentQuizIndex + 1} / ${currentQuizQuestions.length}</div>
+          <button class="btn-mini" id="btnValidate">Valider</button>
+        </div>
+      `;
+
+      const options = box.querySelectorAll(".quiz-option");
+      let selectedIndex = null;
+      options.forEach(opt => {
+        opt.addEventListener("click", () => {
+          options.forEach(o => o.classList.remove("selected"));
+          opt.classList.add("selected");
+          selectedIndex = parseInt(opt.dataset.index, 10);
+        });
+      });
+
+      $("btnValidate").addEventListener("click", () => {
+        if (selectedIndex === null) {
+          $("quizFeedback").textContent = "Choisis une réponse avant de valider.";
+          return;
+        }
+        options.forEach((opt, idx) => {
+          opt.classList.remove("correct", "incorrect");
+          if (idx === q.correctIndex) {
+            opt.classList.add("correct");
+          } else if (idx === selectedIndex) {
+            opt.classList.add("incorrect");
+          }
+        });
+        if (selectedIndex === q.correctIndex) {
+          $("quizFeedback").textContent = "✅ Bonne réponse !";
+          completedQuizzes++;
+          computeGlobalQuizStats();
+        } else {
+          $("quizFeedback").textContent = "❌ Mauvaise réponse. Regarde la bonne réponse en vert.";
+        }
+      });
+    }
+
+    // =========================
+    // QUIZZ GLOBAUX
+    // =========================
+
+    function getAllQuestions() {
+      const all = [];
+      libraryData.forEach(cat => {
+        cat.subCategories.forEach(sc => {
+          sc.quiz.forEach(q => all.push(q));
+        });
+      });
+      return all;
+    }
+
+    function startRandomQuiz() {
+      const all = getAllQuestions();
+      if (all.length === 0) {
+        alert("Aucun quiz pour l’instant. Ajoute des questions dans les catégories.");
+        return;
+      }
+      $("homeView").style.display = "none";
+      $("categoryView").style.display = "";
+      $("breadcrumbCategory").textContent = "Quiz aléatoire";
+      $("breadcrumbSubcategoryWrapper").style.display = "none";
+      $("categoryViewIcon").textContent = "🎲";
+      $("categoryViewTitle").textContent = "Quiz aléatoire";
+      $("categoryViewSubtitle").textContent = "Questions mélangées de toutes les catégories.";
+      $("categoryStats").textContent = `${all.length} questions disponibles`;
+      $("subcategoriesGrid").innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Les sous‑dossiers ne sont pas affichés en mode quiz aléatoire.</div>`;
+      $("fichesList").innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Pas de fiches ici, uniquement des questions aléatoires.</div>`;
+
+      currentQuizQuestions = all.sort(() => Math.random() - 0.5);
+      currentQuizIndex = 0;
+      renderCurrentQuizQuestion();
+    }
+
+    // =========================
+    // ÉVÉNEMENTS
+    // =========================
+
+    $("homeLogo").addEventListener("click", showHome);
+    $("btnBackToHome").addEventListener("click", showHome);
+    $("btnStartExploring").addEventListener("click", () => {
+      // Ouvre la première catégorie
+      if (libraryData.length > 0) {
+        openCategory(libraryData[0].id);
+      }
+    });
+    $("btnRandomQuiz").addEventListener("click", startRandomQuiz);
+    $("shortcutAllQuizzes").addEventListener("click", startRandomQuiz);
+    $("shortcutRecent").addEventListener("click", () => {
+      alert("Pour l’instant, les dernières fiches sont simplement celles que tu ajoutes dans le code.");
+    });
+    $("btnNextQuestion").addEventListener("click", () => {
+      if (currentQuizQuestions.length === 0) return;
+      currentQuizIndex = (currentQuizIndex + 1) % currentQuizQuestions.length;
+      renderCurrentQuizQuestion();
+    });
+
+    $("searchInput").addEventListener("input", (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        renderCategoryGrid();
+        return;
+      }
+      const grid = $("categoryGrid");
+      grid.innerHTML = "";
+      libraryData.forEach(cat => {
+        const matchesCat = cat.name.toLowerCase().includes(term) || cat.description.toLowerCase().includes(term);
+        let matchesSomething = matchesCat;
+        cat.subCategories.forEach(sc => {
+          if (sc.name.toLowerCase().includes(term) || sc.description.toLowerCase().includes(term)) {
+            matchesSomething = true;
+          }
+          sc.fiches.forEach(f => {
+            if (f.title.toLowerCase().includes(term) || f.tags.join(" ").toLowerCase().includes(term)) {
+              matchesSomething = true;
+            }
+          });
+        });
+        if (matchesSomething) {
+          const card = document.createElement("div");
+          card.className = "category-card";
+          card.innerHTML = `
+            <div class="category-card-inner">
+              <div class="category-card-header">
+                <div class="category-card-left">
+                  <div class="category-card-icon">${cat.icon}</div>
+                  <div>
+                    <div class="category-card-title">${cat.name}</div>
+                    <div class="section-subtitle" style="font-size:0.75rem;">${cat.description}</div>
+                  </div>
+                </div>
+                <div class="category-card-tag">${cat.subCategories.length} sous‑dossiers</div>
+              </div>
+              <div class="category-card-meta">
+                <div>${countFiches(cat)} fiches</div>
+                <div>${countQuiz(cat)} quizz</div>
+              </div>
+              <div class="category-card-progress">
+                <div class="category-card-progress-bar"></div>
+              </div>
+            </div>
+          `;
+          card.addEventListener("click", () => openCategory(cat.id));
+          grid.appendChild(card);
+        }
+      });
+    });
+
+    // =========================
+    // INIT
+    // =========================
+
+    renderCategoryGrid();
+    renderSidebar();
+    computeGlobalQuizStats();
+    randomSuggestion();
+  </script>
+</body>
+</html>
